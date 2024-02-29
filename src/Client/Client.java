@@ -1,15 +1,21 @@
 package Client;
 
 import java.net.Socket;
+import java.util.Scanner;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class Client {
-    private static final String HOST = "localhost";
+    //private static final String HOST = "localhost";
     private static final int PORT = 12345;
 
     public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in); // Create a Scanner object for input
+        System.out.print("Enter server IP address: "); // Prompt user for server IP
+        String HOST = scanner.nextLine(); // Read server IP from user
+        
         try (Socket socket = new Socket(HOST, PORT);
              ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
              FileOutputStream fos = new FileOutputStream("received_words.txt")) {

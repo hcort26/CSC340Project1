@@ -5,19 +5,28 @@ import java.net.Socket;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Server {
     private static final int PORT = 12345;
     private static int clientCount = 0;
+    private static boolean running = true; // Control the server running state
 
     public static void main(String[] args) {
 
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Server started. Listening on Port " + PORT);
+        long startTime = System.currentTimeMillis(); // Start timer
+        System.out.println("Server started. Listening on Port " + PORT);
 
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            
             while (true) {
+
+                if (clientCount >= 5) {
+                    // If five clients have connected, stop accepting new connections.
+                    System.out.println("Maximum client limit reached. Stopping server...");
+                    running = false; // Update the running state to stop the server.
+                    break; // Exit the loop to stop the server
+                }
+
                 Socket clientSocket = serverSocket.accept();
                 clientCount++;
                 int currentClientNumber = clientCount;
@@ -29,6 +38,10 @@ public class Server {
         } catch (Exception e) {
             System.err.println("Server Exception: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            long endTime = System.currentTimeMillis(); // End timer
+            long duration = endTime - startTime; // Calculate duration
+            System.out.println("Server ended. Total runtime was " + duration + " milliseconds.");
         }
     }
 
@@ -66,7 +79,6 @@ public class Server {
             }
         }
     }
-    
 }
 
 
