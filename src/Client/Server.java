@@ -3,13 +3,12 @@ package Client;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class Server {
     private static final int PORT = 12345;
     private static int clientCount = 0;
-    private static boolean running = true; // Control the server running state
+    private static boolean running = true;
 
     public static void main(String[] args) {
 
@@ -23,8 +22,8 @@ public class Server {
                 if (clientCount >= 5) {
                     // If five clients have connected, stop accepting new connections.
                     System.out.println("Maximum client limit reached. Stopping server...");
-                    running = false; // Update the running state to stop the server.
-                    break; // Exit the loop to stop the server
+                    running = false; 
+                    break; 
                 }
 
                 Socket clientSocket = serverSocket.accept();
@@ -51,7 +50,7 @@ public class Server {
     
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
-            this.clientNumber = clientNumber;  // Add this line
+            //this.clientNumber = clientNumber;  // Add this line
         }
     
         public void run() {

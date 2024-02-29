@@ -4,10 +4,8 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class Client {
-    //private static final String HOST = "localhost";
     private static final int PORT = 12345;
 
     public static void main(String[] args) {
@@ -27,9 +25,10 @@ public class Client {
                 ois.readFully(buffer, 0, bytesRead); // Read the exact number of bytes
                 fos.write(buffer, 0, bytesRead); // Write bytes to file
             }
-    
             System.out.println("File received from server and saved as received_words.txt");
-        } catch (Exception e) {
+
+            // Error Handling for Client Exception
+            } catch (Exception e) {
             System.err.println("Client Exception: " + e.getMessage());
             e.printStackTrace();
             }
